@@ -11,4 +11,6 @@ class BloodType extends Model
     protected $fillable = [
         'name', 'description', 'active'
     ];
+
+    public $timestamps = false;
 }
