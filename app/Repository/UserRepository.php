@@ -13,12 +13,17 @@ class UserRepository extends BaseRepository
         return "\\App\\Model\\User";
     }
 
-    public function login($email, $password)
+    public function login($email, $password) : boolean
     {
         if (Auth::attempt(['email' => $email, 'password' => $password], true)) {
                 return true;
         }
 
         return false;
+    }
+
+    public function loggedUser()
+    {
+        return Auth::user() ?? false;
     }
 }
