@@ -6,23 +6,40 @@ var rename = require('gulp-rename');
 var sourcemaps = require('gulp-sourcemaps');
 
 var style = function (build) {
+    var compressSass = function () {
+        return sass({
+            outputStyle: 'compressed',
+            includePaths: [
+                './node_modules/bulma'
+            ]
+        });
+    }
     var src = gulp.src('./src/scss/index.scss');
+
     if (build) {
+        src
+            .pipe(compressSass().on('error', sass.logError))
+            .pipe(rename('app.min.css'))
+            .pipe(gulp.dest('./'));
     } else {
         src
             .pipe(sourcemaps.init())
-            .pipe(sass({
-                outputStyle: 'compressed',
-                includePaths: [
-                    './node_modules/bulma'
-                ]
-            }).on('error', sass.logError))
+            .pipe(compressSass().on('error', sass.logError))
             .pipe(rename('app.min.css'))
             .pipe(sourcemaps.write('./'))
             .pipe(gulp.dest('./server'));
     }
 }
 
+var html = function (build) {
+    gulp.src('./src/index.html')
+        .pipe(gulp.dest(build ? './' : './server'));
+}
+
 gulp.task('style', function () {
     style(false);
+});
+
+gulp.task('html', function () {
+    html(false);
 });
