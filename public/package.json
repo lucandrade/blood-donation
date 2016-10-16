@@ -1,24 +1,44 @@
 {
-  "name": "public",
+  "name": "react-node",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf ./server && mkdir server",
+    "build:js": "./node_modules/.bin/browserify src/js/app.js -o dist/app.min.js -t [ babelify --presets [ es2015 react ] ] -p [ minifyify --no-map --uglify ]",
+    "dev:js": "./node_modules/.bin/browserify src/js/app.js -o server/app.min.js -d -t [ babelify --presets [ es2015 react ] ]",
+    "build:css": "node-sass --output-style compressed --include-path src/scss src/scss/index.scss dist/app.min.css",
+    "dev:css": "node-sass --sourceMap server/app.min.css.map --include-path ./node_modules/bulma --include-path src/scss src/scss/index.scss server/app.min.css",
+    "build:html": "cp src/index.html dist/index.html",
+    "dev:html": "cp src/index.html server/index.html & ./node_modules/.bin/replace \"</head>\" \"<script src='//localhost:35729/livereload.js'></script></head>\" server/index.html",
+    "dev": "npm run dev:js & npm run dev:css & npm run dev:html",
+    "build": "rm -rf ./dist && mkdir dist && npm run build:js & npm run build:css & npm run build:html",
+    "watch:js": "nodemon --watch src -e js -x \"npm run dev:js\"",
+    "watch:css": "nodemon --watch src -e scss -x \"npm run dev:css\"",
+    "watch:html": "nodemon --watch src -e html -x \"npm run dev:html\"",
+    "watch": "npm run watch:css & npm run watch:html & npm run watch:js",
+    "start": "npm run clean && sleep 2 && npm run dev & npm run watch & node start.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.15.0",
-    "bulma": "^0.2.1",
-    "react": "^15.3.2",
-    "react-dom": "^15.3.2"
-  },
-  "devDependencies": {
-    "babel-core": "^6.17.0",
     "babel-preset-es2015": "^6.16.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-sass": "^2.3.2",
-    "gulp-sourcemaps": "1.7"
-  }
+    "babel-preset-react": "^6.16.0",
+    "babelify": "^7.3.0",
+    "browserify": "^13.1.0",
+    "bulma": "^0.2.3",
+    "connect": "^3.5.0",
+    "livereload": "^0.5.0",
+    "minifyify": "^7.3.3",
+    "node-sass": "^3.10.1",
+    "nodemon": "^1.11.0",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-redux": "^4.4.5",
+    "redux": "^3.6.0",
+    "replace": "^0.3.0",
+    "serve-static": "^1.11.1"
+  },
+  "devDependencies": {}
 }
