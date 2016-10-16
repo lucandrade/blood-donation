@@ -7,11 +7,11 @@ export default class Menu extends React.Component {
         return (
             <div className="nav-right">
                 <span className="nav-item">
-                    <a href="#" className="button is-primary">
+                    <span className="button is-primary">
                         <span>
                             Switch to patient
                         </span>
-                    </a>
+                    </span>
                 </span>
             </div>
         );
