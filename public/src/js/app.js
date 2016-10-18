@@ -3,7 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Home from './Home';
+import Home from './pages/Home';
 
 const app = document.getElementById('app');
 

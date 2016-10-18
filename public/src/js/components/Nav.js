@@ -13,7 +13,9 @@ export default class Nav extends React.Component {
                 <nav className="nav">
                     <Logo />
                     <Title />
-                    <Menu />
+                    <Menu
+                        handleClick={this.props.handleSwitchUserType}
+                        isDonor={this.props.isDonor} />
                 </nav>
             </div>
         );
