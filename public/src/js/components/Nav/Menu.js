@@ -1,9 +1,8 @@
 'use strict';
 
 import React from 'react';
-
-import * as Actions from '../../actions/AppActions';
-import AppStore from '../../stores/AppStore';
+import UserType from './Menu/UserType';
+import Language from './Menu/Language';
 
 export default class Menu extends React.Component {
     render() {
@@ -11,11 +10,12 @@ export default class Menu extends React.Component {
         return (
             <div className="nav-right">
                 <span className="nav-item">
-                    <span className="button is-primary">
-                        <span onClick={handleClick}>
-                            Switch to {isDonor ? 'patient' : 'donor'}
-                        </span>
-                    </span>
+                    <p className="control has-addons">
+                        <UserType
+                            isDonor={isDonor}
+                            handleClick={handleClick} />
+                        <Language />
+                    </p>
                 </span>
             </div>
         );
